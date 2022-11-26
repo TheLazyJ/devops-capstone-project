@@ -4,7 +4,6 @@ about: User Stories
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 **As a** [role]  
