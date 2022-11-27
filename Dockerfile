@@ -1,4 +1,5 @@
 FROM python:3.9-slim
+# URL https://jsebastien93-8080.theiaopenshift-0-labs-prod-theiaopenshift-4-tor01.proxy.cognitiveclass.ai/
 
 # Create working folder and install dependencies
 WORKDIR /app
