@@ -52,18 +52,18 @@ The Account model contains the following fields:
 
 ## Your Task
 
-Task 1 : Story template to be use with ZenHub .github/ISSUE_TEMPLATE/user_story_template.md
+# Task 1 : Story template to be use with ZenHub .github/ISSUE_TEMPLATE/user_story_template.md
 
-Task 2 : Iplementing REST API's for `READ`, `UPDATE`, `DELETE`, and `LIST` while maintaining **95%** code coverage in service/routes.py and also create testing tests/test_routes.py
+# Task 2 : Iplementing REST API's for `READ`, `UPDATE`, `DELETE`, and `LIST` while maintaining **95%** code coverage in service/routes.py and also create testing tests/test_routes.py
 
-Task 3 : Create Continuous integration workflow .github/workflows/ci-build.yaml
+# Task 3 : Create Continuous integration workflow .github/workflows/ci-build.yaml
 
-Task 4 : Add security headers and CORS policies with Flask talisman (https = False)
+# Task 4 : Add security headers and CORS policies with Flask talisman (https = False)
 
-Task 5 : Countainerize microservice using Docker 'Dockerfile', create img
+# Task 5 : Countainerize microservice using Docker 'Dockerfile', create img
 ```docker build -t accounts .```
 
-Task 6 : Deploy to Kubernetes 
+# Task 6 : Deploy to Kubernetes 
 
 Create PostgreSQL database in Kubernetes for app to use
 ```oc new-app postgresql-ephemeral```
@@ -97,7 +97,7 @@ Check everything running
 Expose service using OpenShift
 ```oc create route edge accounts --service=accounts``` & ```oc get routes```
 
-Task 7 : Create CD pipeline & run
+# Task 7 : Create CD pipeline & run
 
 Create on OpenShift Persistent Volume Claim (PVC)
 ```oc create -f tekton/pvc.yaml```
