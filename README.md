@@ -60,18 +60,49 @@ Task 3 : Create Continuous integration workflow .github/workflows/ci-build.yaml
 
 Task 4 : Add security headers and CORS policies with Flask talisman (https = False)
 
-Task 5 : Countainerize microservice using Docker 'Dockerfile'
-    
-    Docker build image
-    
-    ```docker build -t accounts .```
-    
-# CD Pipeline
+Task 5 : Countainerize microservice using Docker 'Dockerfile', create img
+```docker build -t accounts .```
+
+Task 6 : Deploy to Kubernetes 
+
+Create PostgreSQL database in Kubernetes for app to use
+```oc new-app postgresql-ephemeral```
+
+Create manifest def for the account deployement
+```oc create deployment accounts \
+  --image=us.icr.io/$SN_ICR_NAMESPACE/accounts:1 \
+  --replicas=3 \
+  --dry-run=client -o yaml > deploy/deployment.yaml
+```
+
+Get postgres database details
+```oc describe secret postgresql```
+
+Create deployment
+```oc create -f deploy/deployment.yaml```
+
+Create manifest def of accounts
+```oc expose deploy accounts \
+  --type=ClusterIP \
+  --port=8080 \
+  --dry-run=client -o yaml > deploy/service.yaml
+```
+
+Apply service
+```oc create -f deploy/service.yaml```
+
+Check everything running
+```oc get all -l app=accounts```
+
+Expose service using OpenShift
+```oc create route edge accounts --service=accounts``` & ```oc get routes```
+
+Task 7 : Create CD pipeline & run
 
 Create on OpenShift Persistent Volume Claim (PVC)
 ```oc create -f tekton/pvc.yaml```
 
-Apply on OC tekton tasks
+Apply on OS tekton tasks
 ```oc apply -f tekton/tasks.yaml```
 
 Apply on OC tekton pipeline
