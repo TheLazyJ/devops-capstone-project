@@ -33,6 +33,23 @@ After sourcing it you prompt should look like this:
 
 Under normal circumstances you should not have to run these commands. They are performed automatically at setup but may be useful when things go wrong:
 
+## CD Pipeline
+
+oc create -f tekton/pvc.yaml
+
+oc apply -f tekton/tasks.yaml
+
+oc apply -f tekton/pipeline.yaml
+
+tkn pipeline start cd-pipeline \
+    -p repo-url="https://github.com/thelazyj/devops-capstone-project.git" \
+    -p branch="main" \
+    -w name=pipeline-workspace,claimName=pipelinerun-pvc \
+    -s pipeline \
+    --showlog
+
+tkn pipelinerun ls
+
 ### Activate the Python 3.9 virtual environment
 
 You can activate the Python 3.9 environment with:
