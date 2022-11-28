@@ -15,66 +15,9 @@ Do Not fork this code! It is meant to be used by pressing the  <span style=color
 
 These labs are designed to be executed in the IBM Developer Skills Network Cloud IDE with OpenShift. Please use the links provided in the Coursera Capstone project to access the lab environment.
 
-Once you are in the lab environment, you can initialize it with `bin/setup.sh` by sourcing it. (*Note: DO NOT run this program as a bash script. It sets environment variable and so must be sourced*):
-
-```bash
-source bin/setup.sh
-```
-
-This will install Python 3.9, make it the default, modify the bash prompt, create a Python virtual environment and activate it.
-
-After sourcing it you prompt should look like this:
-
-```bash
-(venv) theia:project$
-```
-
 ## Useful commands
 
 Under normal circumstances you should not have to run these commands. They are performed automatically at setup but may be useful when things go wrong:
-
-## CD Pipeline
-
-oc create -f tekton/pvc.yaml
-
-oc apply -f tekton/tasks.yaml
-
-oc apply -f tekton/pipeline.yaml
-
-tkn pipeline start cd-pipeline \
-    -p repo-url="https://github.com/thelazyj/devops-capstone-project.git" \
-    -p branch="main" \
-    -w name=pipeline-workspace,claimName=pipelinerun-pvc \
-    -s pipeline \
-    --showlog
-
-tkn pipelinerun ls
-
-### Activate the Python 3.9 virtual environment
-
-You can activate the Python 3.9 environment with:
-
-```bash
-source ~/venv/bin/activate
-```
-
-### Installing Python dependencies
-
-These dependencies are installed as part of the setup process but should you need to install them again, first make sure that the Python 3.9 virtual environment is activated and then use the `make install` command:
-
-```bash
-make install
-```
-
-### Starting the Postgres Docker container
-
-The labs use Postgres running in a Docker container. If for some reason the service is not available you can start it with:
-
-```bash
-make db
-```
-
-You can use the `docker ps` command to make sure that postgres is up and running.
 
 ## Project layout
 
@@ -111,33 +54,36 @@ The Account model contains the following fields:
 
 Complete this microservice by implementing REST API's for `READ`, `UPDATE`, `DELETE`, and `LIST` while maintaining **95%** code coverage. In true **Test Driven Development** fashion, first write tests for the code you "wish you had", and then write the code to make them pass.
 
-## Local Kubernetes Development
+## CD Pipeline
 
-This repo can also be used for local Kubernetes development. It is not advised that you run these commands in the Cloud IDE environment. The purpose of these commands are to simulate the Cloud IDE environment locally on your computer. 
+# Create on OpenShift Persistent Volume Claim (PVC)
+```oc create -f tekton/pvc.yaml```
 
-At a minimum, you will need [Docker Desktop](https://www.docker.com/products/docker-desktop) installed on your computer. For the full development environment, you will also need [Visual Studio Code](https://code.visualstudio.com) with the [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extension from the Visual Studio Marketplace. All of these can be installed manually by clicking on the links above or you can use a package manager like **Homebrew** on Mac of **Chocolatey** on Windows.
+# Apply on OC tekton tasks
+```oc apply -f tekton/tasks.yaml```
 
-Please only use these commands for working stand-alone on your own computer with the VSCode Remote Container environment provided.
+# Apply on OC tekton pipeline
+```oc apply -f tekton/pipeline.yaml```
 
-1. Bring up a local K3D Kubernetes cluster
+# Apply to my cluster
+```kubectl apply -f tekton/pipeline.yaml```
 
-    ```bash
-    $ make cluster
-    ```
+# Start pipeline
+```tkn pipeline start cd-pipeline \
+    -p repo-url="https://github.com/thelazyj/devops-capstone-project.git" \
+    -p branch=main \
+    -p build-image=image-registry.openshift-image-registry.svc:5000/$SN_ICR_NAMESPACE/accounts:1 \
+    -w name=pipeline-workspace,claimName=pipelinerun-pvc \
+    -s pipeline \
+    --showlog
+```
 
-2. Install Tekton
+# Monitor Tekton pipeline run
+```tkn pipelinerun ls```
 
-    ```bash
-    $ make tekton
-    ```
+# Check all deployements with the app accounts
+```oc get all -l app=accounts```
 
-3. Install the ClusterTasks that the Cloud IDE has
-
-    ```bash
-    $ make clustertasks
-    ```
-
-You can now perform Tekton development locally, just like in the Cloud IDE lab environment.
 
 ## Author
 
