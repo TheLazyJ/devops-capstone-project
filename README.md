@@ -56,19 +56,19 @@ Complete this microservice by implementing REST API's for `READ`, `UPDATE`, `DEL
 
 ## CD Pipeline
 
-# Create on OpenShift Persistent Volume Claim (PVC)
+Create on OpenShift Persistent Volume Claim (PVC)
 ```oc create -f tekton/pvc.yaml```
 
-# Apply on OC tekton tasks
+Apply on OC tekton tasks
 ```oc apply -f tekton/tasks.yaml```
 
-# Apply on OC tekton pipeline
+Apply on OC tekton pipeline
 ```oc apply -f tekton/pipeline.yaml```
 
-# Apply to my cluster
+Apply to my cluster
 ```kubectl apply -f tekton/pipeline.yaml```
 
-# Start pipeline
+Start pipeline
 ```tkn pipeline start cd-pipeline \
     -p repo-url="https://github.com/thelazyj/devops-capstone-project.git" \
     -p branch=main \
@@ -78,10 +78,10 @@ Complete this microservice by implementing REST API's for `READ`, `UPDATE`, `DEL
     --showlog
 ```
 
-# Monitor Tekton pipeline run
+Monitor Tekton pipeline run
 ```tkn pipelinerun ls```
 
-# Check all deployements with the app accounts
+Check all deployements with the app accounts
 ```oc get all -l app=accounts```
 
 
