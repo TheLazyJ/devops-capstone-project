@@ -38,6 +38,7 @@ spec:
       runAfter:
         - init
 
+    # Create the Lint task to verify code format
     - name: lint
       workspaces:
         - name: source
@@ -52,6 +53,7 @@ spec:
       runAfter:
         - clone
     
+    # Creating a test task 
     - name: tests
       workspaces:
         - name: source
@@ -66,6 +68,7 @@ spec:
       runAfter:
         - clone
 
+    # Build task using buildah
     - name: build
       workspaces:
         - name: source
@@ -79,3 +82,23 @@ spec:
       runAfter:
         - tests
         - lint
+
+    # Deploy Docker img to OpenShift cluster
+    - name: deploy
+      workspaces:
+        - name: manifest-dir
+          workspace: pipeline-workspace
+      taskRef:
+        name: openshift-client
+        kind: ClusterTask
+      params:
+      - name: SCRIPT
+        value: |
+          echo "Updating manifest..."
+          sed -i "s|IMAGE_NAME_HERE|$(params.build-image)|g" deploy/deployment.yaml
+          cat deploy/deployment.yaml
+          echo "Deploying to OpenShift..."
+          oc apply -f deploy/
+          oc get pods -l app=accounts
+      runAfter:
+        - build
