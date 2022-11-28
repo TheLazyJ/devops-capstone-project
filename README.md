@@ -50,7 +50,7 @@ The Account model contains the following fields:
 | phone_number | String(32) | True |
 | date_joined | Date | False |
 
-## Your Task
+## Tasks
 
 # Task 1 :
 Story template to be use with ZenHub .github/ISSUE_TEMPLATE/user_story_template.md
