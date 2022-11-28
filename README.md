@@ -1,4 +1,4 @@
-# DevOps Capstone Template
+# DevOps Capstone - Final Project
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Python 3.9](https://img.shields.io/badge/Python-3.9-green.svg)](https://shields.io/)
@@ -52,9 +52,21 @@ The Account model contains the following fields:
 
 ## Your Task
 
-Complete this microservice by implementing REST API's for `READ`, `UPDATE`, `DELETE`, and `LIST` while maintaining **95%** code coverage. In true **Test Driven Development** fashion, first write tests for the code you "wish you had", and then write the code to make them pass.
+Task 1 : Story template to be use with ZenHub .github/ISSUE_TEMPLATE/user_story_template.md
 
-## CD Pipeline
+Task 2 : Iplementing REST API's for `READ`, `UPDATE`, `DELETE`, and `LIST` while maintaining **95%** code coverage in service/routes.py and also create testing tests/test_routes.py
+
+Task 3 : Create Continuous integration workflow .github/workflows/ci-build.yaml
+
+Task 4 : Add security headers and CORS policies with Flask talisman (https = False)
+
+Task 5 : Countainerize microservice using Docker 'Dockerfile'
+    
+    Docker build image
+    
+    ```docker build -t accounts .```
+    
+# CD Pipeline
 
 Create on OpenShift Persistent Volume Claim (PVC)
 ```oc create -f tekton/pvc.yaml```
